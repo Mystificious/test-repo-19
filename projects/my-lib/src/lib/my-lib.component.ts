@@ -6,12 +6,13 @@ import {MyLibService} from './my-lib.service';
   imports: [],
   standalone: true,
   template: `
-    <p>
-      my-lib works!
-    </p>
-    {{
-        TestProp
-    }}
+    <div style="border: 1px solid blue;">
+      Component: MyLibComponent
+      <p>
+        TestProp (gets adjusted by directive): "{{TestProp}}"
+      </p>
+
+    </div>
   `,
   styles: ``
 })
@@ -20,6 +21,11 @@ export class MyLibComponent {
 
   get TestProp() {
     return this.service.testProperty;
+  }
+
+  ngOnInit() {
+    // works as expected:
+    // this.service.setTestProperty('The Property was adjusted');
   }
 
 }

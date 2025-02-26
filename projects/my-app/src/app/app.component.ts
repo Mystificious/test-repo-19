@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import {MyLibComponent, MyLibService} from 'my-lib';
 
 @Component({
@@ -7,14 +7,17 @@ import {MyLibComponent, MyLibService} from 'my-lib';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
   title = 'my-app';
 
   service = inject(MyLibService);
+  isLoaded = signal(false);
 
   ngOnInit() {
-    this.service.setTestProperty('The Property was adjusted');
-
+    setTimeout(() => {
+      this.isLoaded.set(true);
+    }, 1000);
   }
 }
